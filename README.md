@@ -115,6 +115,20 @@ Dual ESM + CJS with an `exports` map (types included for both). Requires Node >=
 (global `fetch`). `await using` requires TypeScript 5.2+ with `lib: ["esnext"]` or newer;
 everything works without it via `try/finally` + `kill()`.
 
+## Local development (Docker)
+
+No local Node needed — run the full build + test suite in a container
+(`node:22`, npm cache persisted in a named volume):
+
+```bash
+docker compose run --rm test
+```
+
+The repo is mounted at `/work`; the container runs `npm ci`, `npm run build`
+(tsup) and `npm test` (vitest). `node_modules/` and `dist/` are masked with
+anonymous volumes inside the container, so the container installs its own
+dependencies and never touches your host copies.
+
 ## License
 
 MIT © 2026 xShellz

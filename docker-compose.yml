@@ -1,0 +1,15 @@
+services:
+  test:
+    image: node:22
+    working_dir: /work
+    environment:
+      npm_config_cache: /cache/npm
+    volumes:
+      - .:/work
+      - /work/node_modules
+      - /work/dist
+      - npm-cache:/cache/npm
+    command: bash -lc "npm ci && npm run build && npm test"
+
+volumes:
+  npm-cache:
