@@ -1,0 +1,67 @@
+{
+  "name": "xshellz",
+  "version": "0.1.0",
+  "description": "Official TypeScript/Node SDK for xShellz sandboxes — spawn throwaway, gVisor-isolated Linux boxes and run commands in them.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xshellz/xshellz-js.git"
+  },
+  "homepage": "https://github.com/xshellz/xshellz-js#readme",
+  "bugs": {
+    "url": "https://github.com/xshellz/xshellz-js/issues"
+  },
+  "keywords": [
+    "sandbox",
+    "ssh",
+    "gvisor",
+    "xshellz",
+    "agents",
+    "code-execution",
+    "vm"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run typecheck && npm run build && npm test"
+  },
+  "dependencies": {
+    "ssh2": "^1.16.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/ssh2": "^1.15.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^3.2.4"
+  },
+  "overrides": {
+    "esbuild": "^0.28.1"
+  }
+}
