@@ -55,7 +55,7 @@
     "ssh2": "^1.16.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
+    "@types/node": "^26.1.1",
     "@types/ssh2": "^1.15.1",
     "@vitest/coverage-v8": "^3.2.4",
     "tsup": "^8.3.5",
