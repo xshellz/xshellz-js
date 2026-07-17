@@ -52,3 +52,16 @@ export class SandboxNotRunningError extends XshellzError {
     super(message);
   }
 }
+
+/**
+ * `Sandbox.getOrCreate()` found an existing box with the requested name but
+ * no private key for it — neither an explicit `privateKey` option nor a
+ * keystore file. The message says where a key was expected.
+ */
+export class MissingKeyError extends XshellzError {}
+
+/**
+ * `sbx.runCode()` was called with a language the SDK does not know how to
+ * execute. The message lists the supported languages.
+ */
+export class UnsupportedLanguageError extends XshellzError {}

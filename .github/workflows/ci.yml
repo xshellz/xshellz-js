@@ -29,5 +29,5 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
+      - name: Test (coverage gate ≥ 80%)
         run: npm test

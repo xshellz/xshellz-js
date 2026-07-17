@@ -1,7 +1,7 @@
 import type { ResolvedConfig } from "./config.js";
 import { ApiError, AuthError, QuotaError, SandboxNotRunningError, XshellzError } from "./errors.js";
 
-const USER_AGENT = "xshellz-js/0.1.0";
+const USER_AGENT = "xshellz-js/0.2.0";
 
 /**
  * Wire shape of an agent shell (sandbox) as returned by the xShellz control
@@ -24,6 +24,50 @@ export interface SandboxInfo {
   /** Effective OCI runtime: "runsc" = gVisor, "runc" = shared host kernel. */
   isolation: string | null;
   gvisor: boolean;
+}
+
+/**
+ * Live resource usage for a sandbox, verbatim from
+ * `GET /v1/shells/agent/{uuid}/stats` (snake_case wire shape). `*_allowed_*`
+ * fields are the plan's ceilings; the rest are current usage.
+ */
+export interface SandboxStats {
+  mem_used_mb: number;
+  mem_limit_mb: number;
+  mem_allowed_mb: number;
+  cpu_percent: number;
+  cpu_allowed_vcpus: number;
+  cpu_throttled_periods: number;
+  pids_current: number;
+  pids_allowed: number;
+  disk_used_mb: number;
+  disk_allowed_mb: number;
+  net_rx_mb: number;
+  net_tx_mb: number;
+  blk_read_mb: number;
+  blk_write_mb: number;
+}
+
+/** One process row from `GET /v1/shells/agent/{uuid}/procs`. */
+export interface SandboxProcess {
+  pid: number;
+  comm: string;
+  cpu: number;
+  mem: number;
+}
+
+/**
+ * Top processes + active session count + disk usage, verbatim from
+ * `GET /v1/shells/agent/{uuid}/procs` (snake_case wire shape).
+ */
+export interface SandboxProcs {
+  procs: SandboxProcess[];
+  /** Active SSH/terminal sessions on the box. */
+  sessions: number;
+  /** Names of coding agents detected running inside the box. */
+  agents: string[];
+  disk_used_mb: number;
+  disk_allowed_mb: number;
 }
 
 /**
